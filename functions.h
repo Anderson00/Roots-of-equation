@@ -5,6 +5,7 @@
 
 //All Functions; Padrão: double <nome>(<double>);
 double func1(double x);//2x^(3)-4x^(2)+3x
+double func1Dx(double x);// func1'(x);
 double func2(double x);//x^5 - 3x^4 - 3x^2 + 2
 double func3(double x);//sqrt(x) - 5^-x
 double func4(double x);//x^5 - x^4 - 4x + 1
@@ -14,6 +15,18 @@ double func5(double x);//0.05x^3 - 0.4x^2 +3*x*senx
 
 double func1(double x){    
     return 2*pow(x,3)-4*pow(x,2)+3*x;
+}
+
+double func1Dx(double x){
+    return 6*pow(x,2) - 8*x + 3;
+}
+
+double func0(double x){
+    return pow(x,3) - 5*pow(x,2) + x + 3; 
+}
+
+double func0Dx(double x){
+    return 3*pow(x,2) - 10*x + 1;
 }
 
 double func2(double x){

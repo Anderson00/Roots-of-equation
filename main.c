@@ -21,7 +21,23 @@ void GenerateCSV(const char *filename);//redireciona o stdout para o arquivo *fi
 int main(int argc, char **argv){  
     //GenerateCSV("Resultados.csv");
     //printFunctionsInCSV();
-    printFunctions();
+    //printFunctions();
+
+    RaizAux aux = {};
+    aux.e = 0.001;
+    aux.interAB.a = -1.0;
+    aux.interAB.b = -2.44;
+    Results resultados = {};
+
+    newtonRhapson(func0, func0Dx, aux, &resultados);
+    printf("------------------| Newton Raphson |------------------\n");
+    printf("x: \t\t\t%.8lf\n", resultados.x0);
+    printf("Iterações: \t\t%d\n", resultados.iterations);
+    printf("Inter da Solução: \t(%.8lf %.8lf)\n", resultados.solutInterval.a, resultados.solutInterval.b);
+    printf("Erro Absoluto: \t\t%.8lf\n", resultados.fx0);
+    printf("--------------------------------------------------\n");
+    
+
     return 0;
 }
 
@@ -38,9 +54,9 @@ void printFunctionsInCSV(void){
     
     for(int i = 0; i < 4; i++){
         RaizAux aux = {};
-        aux.e = E[i];
-        aux.interAB.a = 0.30;
-        aux.interAB.b = 3;
+        aux.e = E[i];//Precisão e
+        aux.interAB.a = 0.30;//[A,
+        aux.interAB.b = 3;//    B]
         Results resultados = {};
         Results resultados2 = {};
         Results resultados3 = {};
@@ -73,9 +89,9 @@ void printFunctions(void){
     
     for(int i = 0; i < 4; i++){
         RaizAux aux = {};
-        aux.e = E[i];
-        aux.interAB.a = 0.30;
-        aux.interAB.b = 3;
+        aux.e = E[i];//Precisão e
+        aux.interAB.a = 0.30;//[A,
+        aux.interAB.b = 3;//    B]
         Results resultados = {};
         
         printf("f(x) = %s, com e = %lf\n", funcNames[i], aux.e);

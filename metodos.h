@@ -13,6 +13,7 @@
 Results* bisection(double (*func)(double), RaizAux aux, Results *resul);
 Results* posicao_falsa(double (*func)(double), RaizAux aux, Results *resul);
 Results* pegaso(double (*func)(double), RaizAux aux, Results *resul);
+Results* newtonRhapson(double (*func)(double), double (*derivate)(double), RaizAux aux, Results *resul);
 //end
 
 Results* bisection(double (*func)(double), RaizAux aux, Results *resul){
@@ -97,6 +98,38 @@ Results* pegaso(double (*func)(double), RaizAux aux, Results *resul){
     resul->fx0 = func(x0);
     resul->solutInterval.a = interv.a;
     resul->solutInterval.b = interv.b;
+    return resul;
+}
+
+Results* newtonRhapson(double (*func)(double), double (*derivate)(double), RaizAux aux, Results *resul){
+    //xn+1 = xn - f(xn)/f'(xn)
+    double xn = aux.interAB.b;
+
+    while(true){
+
+        xn = xn - func(xn)/derivate(xn);
+
+        /*if(func(aux.interAB.a)*func(xn) < 0){
+            aux.interAB.b = xn;
+        }else{
+            aux.interAB.a = xn;
+        }*/
+
+
+        bool l1 = fabs(func(xn)) > aux.e;
+        //bool l2 = fabs(func(aux.interAB.a)) > aux.e;
+        //bool l3 = fabs(func(aux.interAB.a)) > aux.e;
+        bool l4 = derivate(xn) != 0;
+
+        if(!(l1 /*&& l2 && l3*/ && l4)){
+            break;
+        }
+        resul->iterations++;
+    }
+    resul->x0 = xn;
+    resul->fx0 = func(xn);
+    resul->solutInterval.a = aux.interAB.a;
+    resul->solutInterval.b = aux.interAB.b;
     return resul;
 }
 
